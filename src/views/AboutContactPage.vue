@@ -4,7 +4,7 @@
 
       <h1 class="pageTitle">За нас</h1>
 
-      <!-- ABOUT CARD -->
+
       <section class="card">
         <h2 class="cardTitle">За нас</h2>
 

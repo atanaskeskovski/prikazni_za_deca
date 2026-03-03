@@ -44,7 +44,7 @@
   gap:18px;
 }
 
-/* ✅ БРЕНД: “стар” feeling (serif) */
+
 .brand{
   color:#fff;
   text-decoration:none;
@@ -55,21 +55,21 @@
   font-size: 18px;
 }
 
-/* NAV */
+
 .nav{
   display:flex;
   gap:8px;
   flex-wrap:wrap;
   align-items:center;
 
-  /* “glass rail” зад линковите */
+
   padding:6px;
   border-radius:999px;
   background: rgba(255,255,255,.10);
   backdrop-filter: blur(8px);
 }
 
-/* ✅ ЛИНКОВИ: како “tabs” */
+
 .navLink{
   position:relative;
   display:inline-flex;
@@ -83,20 +83,20 @@
   line-height:1;
   letter-spacing:.1px;
 
-  /* поелегантно од рамка */
+
   background: transparent;
   opacity:.95;
   transition: background .15s ease, transform .15s ease, opacity .15s ease;
 }
 
-/* hover */
+
 .navLink:hover{
   background: rgba(255,255,255,.14);
   transform: translateY(-1px);
   opacity: 1;
 }
 
-/* ✅ active underline + “tab” feel */
+
 .navLink.router-link-active{
   background: rgba(255,255,255,.18);
   opacity: 1;
@@ -115,7 +115,7 @@
   opacity:.95;
 }
 
-/* Контакт нека е малку поистакнат */
+
 .navLink.contact{
   background: rgba(255,255,255,.16);
 }
@@ -123,7 +123,7 @@
   background: rgba(255,255,255,.22);
 }
 
-/* Responsive */
+
 @media (max-width: 760px){
   .container{
     flex-direction:column;

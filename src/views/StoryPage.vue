@@ -10,11 +10,10 @@
       </div>
 
       <div v-if="story" class="box">
-        <!-- AUDIO -->
         <div class="audioWrap">
           <audio
               ref="audioEl"
-              :src="`/audio/${story.id}.mp3`"
+              :src="`${BASE}audio/${story.id}.mp3`"
               controls
               preload="metadata"
               @loadedmetadata="onLoadedMeta"
@@ -25,7 +24,6 @@
           <div class="hint"></div>
         </div>
 
-        <!-- TEXT -->
         <div class="textWrap" ref="textRoot">
           <template v-for="(sent, si) in sentences" :key="si">
             <p class="sentence" :class="{ activeSentence: si === activeSentenceIndex }">
@@ -58,9 +56,7 @@ import { ref, computed, reactive, watch, nextTick } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import { stories } from "../data/stories"
 
-// =====================
-// AUTO SPEED TUNING
-// =====================
+const BASE = import.meta.env.BASE_URL
 const PAUSE_FRACTION = 0.22
 const MIN_WORD_SEC = 0.30
 const MAX_WORD_SEC = 1.20
@@ -77,7 +73,7 @@ const textRoot = ref(null)
 const activeSentenceIndex = ref(-1)
 const activeWordIndex = ref(-1)
 
-// auto seconds per word
+
 const wordSec = ref(0.6)
 
 const timeline = reactive({
@@ -85,20 +81,16 @@ const timeline = reactive({
   sentences: []
 })
 
-// =====================
-// ✅ IMAGES: 4 images, each 25%
-// =====================
+
 const currentImageIndex = ref(0)
 
 const currentImage = computed(() => {
   if (!story.value) return ""
-  // /public/story-images/<id>/1.jpg ... 4.jpg
-  return `/story-images/${story.value.id}/${currentImageIndex.value + 1}.jpg`
+
+  return `${BASE}story-images/${story.value.id}/${currentImageIndex.value + 1}.jpg`
 })
 
-// =====================
-// TEXT SPLIT (line-by-line)
-// =====================
+
 const sentences = computed(() => {
   if (!story.value) return []
 
@@ -159,7 +151,6 @@ function clamp(v, a, b) {
   return Math.max(a, Math.min(b, v))
 }
 
-// ✅ AUTO SPEED
 function computeAutoWordSec(audioDurationSec) {
   const tw = totalWords.value || 1
   const usable = audioDurationSec * (1 - PAUSE_FRACTION)
@@ -231,7 +222,7 @@ function onTimeUpdate() {
 
   const t = a.currentTime || 0
 
-  // ✅ IMAGE swap by percent (4 images)
+
   const dur = a.duration || timeline.totalDuration || 1
   const p = t / Math.max(0.001, dur)
 
@@ -240,7 +231,7 @@ function onTimeUpdate() {
   else if (p < 0.75) currentImageIndex.value = 2
   else currentImageIndex.value = 3
 
-  // text highlight only if we have timeline
+
   if (!timeline.sentences.length) return
 
   let si = timeline.sentences.findIndex(s => t >= s.start && t < s.end)
@@ -266,9 +257,6 @@ function isWordSpoken(si, wi) {
   return !!w && t >= w.end
 }
 
-// =====================
-// ✅ SCROLL ONLY INSIDE textWrap (NO PAGE JUMP)
-// =====================
 const wordEls = new Map()
 
 function registerWordEl(el, si, wi) {
@@ -281,15 +269,15 @@ function scrollActiveInsideTextWrap() {
   const el = wordEls.get(`${activeSentenceIndex.value}-${activeWordIndex.value}`)
   if (!container || !el) return
 
-  // positions relative to container
+
   const cRect = container.getBoundingClientRect()
   const eRect = el.getBoundingClientRect()
 
-  // current scrollTop + distance inside container
+
   const elTopInside = (eRect.top - cRect.top) + container.scrollTop
   const target = elTopInside - container.clientHeight / 2
 
-  // smooth internal scroll (won't move the whole page)
+
   container.scrollTo({ top: Math.max(0, target), behavior: "smooth" })
 }
 </script>
@@ -309,7 +297,7 @@ function scrollActiveInsideTextWrap() {
 
 .title{ margin:18px 0 14px; font-size:34px; }
 
-/* ✅ Image shows FULL (no crop) */
+
 .storyImageWrap{
   margin: 10px 0 16px;
   border-radius: 18px;
@@ -319,8 +307,8 @@ function scrollActiveInsideTextWrap() {
 }
 .storyImage{
   width: 100%;
-  height: 360px;         /* можеш 300-420 по вкус */
-  object-fit: contain;   /* ✅ FULL IMAGE */
+  height: 360px;
+  object-fit: contain;
   display: block;
 }
 

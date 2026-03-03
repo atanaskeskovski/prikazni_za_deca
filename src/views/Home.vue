@@ -360,7 +360,7 @@ function goToAbout() {
   border: 2px solid #1f78b4;
 }
 
-/* FOOTER */
+
 .footer{
   width:100%;
   background:#0f2d46;
