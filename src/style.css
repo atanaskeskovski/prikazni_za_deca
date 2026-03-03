@@ -1,0 +1,38 @@
+/* ===== GLOBAL RESET ===== */
+
+*,
+*::before,
+*::after{
+  box-sizing: border-box;
+}
+
+/* browser default margins OFF */
+html, body{
+  margin:0;
+  padding:0;
+  width:100%;
+  min-height:100%;
+  overflow-x:hidden;
+  background:#fff;
+}
+
+/* FONT */
+body{
+  font-family: 'Nunito', system-ui, Arial, sans-serif;
+  line-height:1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* VUE ROOT */
+#app{
+  width:100%;
+  min-height:100vh;
+  margin:0;
+  padding:0;
+}
+
+/* images/video да не прават празни линии */
+img, video{
+  display:block;
+  max-width:100%;
+}
